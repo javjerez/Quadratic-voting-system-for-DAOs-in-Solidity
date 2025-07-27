@@ -41,7 +41,7 @@ This repository contains a Solidity smart contract that implements a **quadratic
 | **Block Timestamp Abuse**   | Contract logic does not rely on block timestamps                           | —                                                    |
 | **Denial of Service (DoS)** | Avoided using "pull over push" design in `closeVoting()`                   | `executeSignaling()`, memory design                  |
 
-🔁 Reentrancy Attacks
+### Reentrancy Attacks
 Protection: The contract uses a lock variable (a classic mutex pattern) to prevent reentrancy on sensitive functions.
 
 Applied in:
@@ -56,22 +56,22 @@ executeSignaling()
 
 Why it's important: Prevents a malicious contract from recursively calling vulnerable functions before the state is updated.
 
-🧬 DelegateCall / Parity Wallet Attack
+### DelegateCall / Parity Wallet Attack
 Protection: The contract does not use delegatecall.
 
 Ownership is set directly via the constructor and is never altered externally.
 
 Why it matters: Prevents unintentional code execution in the context of your contract — the flaw behind the infamous Parity Wallet hack.
 
-🔗 tx.origin Exploits
+### tx.origin Exploits
 Protection: All access control is enforced using msg.sender, never tx.origin.
 
 Why it matters: Using tx.origin can allow phishing-style attacks where users unknowingly trigger functions from a malicious contract.
 
-🕒 Timestamp Manipulation
+### Timestamp Manipulation
 Protection: The contract does not use block.timestamp for logic, so it’s immune to miners influencing voting timing.
 
-🚫 Denial of Service (DoS) via Loops
+### Denial of Service (DoS) via Loops
 Problem: Iterating over large arrays (e.g., during closeVoting) can cause DoS due to gas limits.
 
 Solution: We implemented the "favor pull over push" pattern:
@@ -115,13 +115,19 @@ Execute signaling:
 ```
 contract.executeSignaling(proposalId);
 ```
+
+
 ## Disclaimer
+
 The original assignment statement is not included in this repository. However, this contract and its documentation are based on a real academic project focused on DAO governance and secure voting systems. The code is original, reviewed and tested.
+
 ---
 
 ## Authors
 **Javier Jerez Reinoso**
+
 **Pablo Chicharro Gómez**
+
 Computer Science engineers
 
 ---
