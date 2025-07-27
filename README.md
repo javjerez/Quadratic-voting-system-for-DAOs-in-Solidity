@@ -125,9 +125,7 @@ The original assignment statement is not included in this repository. However, t
 
 ## Authors
 **Javier Jerez Reinoso**
-
 **Pablo Chicharro Gómez**
-
 Computer Science engineers
 
 ---
