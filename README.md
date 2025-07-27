@@ -7,7 +7,7 @@ Final year project on secure and scalable DAO voting mechanisms using Solidity a
 
 # 🪙 Quadratic Voting Smart Contract for DAOs
 
-This repository contains a Solidity smart contract that implements a **quadratic voting system for DAOs (Decentralized Autonomous Organizations)**. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals - all **on-chain**.
+This repository contains a Solidity smart contract that implements a **quadratic voting system for DAOs (Decentralized Autonomous Organizations)**. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals, all **on-chain**.
 
 > The complete design rationale and analysis are detailed in the project's technical report (Spanish only): `Rummikub-Technical-Report.pdf`.
 
