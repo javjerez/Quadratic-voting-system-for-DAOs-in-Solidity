@@ -1,17 +1,22 @@
 # Quadratic-voting-system-for-DAOs-in-Solidity
 A secure, gas-efficient smart contract implementing a quadratic voting system for DAO governance using ERC20 tokens.
 
----
-
-# 🗳️ Quadratic Voting Smart Contract for DAOs
-
-This repository contains a Solidity smart contract that implements a **quadratic voting system for DAOs (Decentralized Autonomous Organizations)**. The contract allows participants to register, propose initiatives, vote using quadratic weighting, and execute approved proposals — all **on-chain**.
-
-> 📝 The complete design rationale and analysis are detailed in the project's technical report (Spanish only): `Memoria Proyecto.pdf`.
+Final year project on secure and scalable DAO voting mechanisms using Solidity and ERC20.
 
 ---
 
-## 📌 Features
+# 🪙 Quadratic Voting Smart Contract for DAOs
+
+This repository contains a Solidity smart contract that implements a **quadratic voting system for DAOs (Decentralized Autonomous Organizations)**. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals - all **on-chain**.
+
+> The complete design rationale and analysis are detailed in the project's technical report (Spanish only): `Rummikub-Technical-Report.pdf`.
+
+## Documentation
+- **QuadraticVoting.sol:** Main smart contract handling proposals, voting, staking, etc.
+- **ERC20Token.sol:** Custom token implementation extending OpenZeppelin’s ERC20.
+- **IExecutableProposal.sol:** Interface for external proposal contracts.
+
+## Features
 
 - **Quadratic Voting**: Vote costs grow quadratically (1, 4, 9, ...).
 - **Two Proposal Types**:
@@ -19,13 +24,10 @@ This repository contains a Solidity smart contract that implements a **quadratic
   - Signaling proposals (no budget, non-binding).
 - **Dynamic Threshold Approval**: Proposals are approved once a calculated threshold is met.
 - **ERC20 Token Integration**: Users vote using a dedicated ERC20 token created during deployment.
-- **Gas-efficient architecture**: Avoids loops in critical functions using “pull over push” pattern.
+- **Gas efficient architecture**: Avoids loops in critical functions using `pull over push` pattern.
 - **Secure and modular**:
   - Proposal execution through interfaces.
-  - Uses OpenZeppelin standards.
   - Protection against common vulnerabilities.
-
----
 
 ## 🔐 Security Measures
 
@@ -39,89 +41,87 @@ This repository contains a Solidity smart contract that implements a **quadratic
 | **Block Timestamp Abuse**   | Contract logic does not rely on block timestamps                           | —                                                    |
 | **Denial of Service (DoS)** | Avoided using "pull over push" design in `closeVoting()`                   | `executeSignaling()`, memory design                  |
 
+🔁 Reentrancy Attacks
+Protection: The contract uses a lock variable (a classic mutex pattern) to prevent reentrancy on sensitive functions.
+
+Applied in:
+
+stake()
+
+withdrawFromProposal()
+
+checkAndExecuteProposal()
+
+executeSignaling()
+
+Why it's important: Prevents a malicious contract from recursively calling vulnerable functions before the state is updated.
+
+🧬 DelegateCall / Parity Wallet Attack
+Protection: The contract does not use delegatecall.
+
+Ownership is set directly via the constructor and is never altered externally.
+
+Why it matters: Prevents unintentional code execution in the context of your contract — the flaw behind the infamous Parity Wallet hack.
+
+🔗 tx.origin Exploits
+Protection: All access control is enforced using msg.sender, never tx.origin.
+
+Why it matters: Using tx.origin can allow phishing-style attacks where users unknowingly trigger functions from a malicious contract.
+
+🕒 Timestamp Manipulation
+Protection: The contract does not use block.timestamp for logic, so it’s immune to miners influencing voting timing.
+
+🚫 Denial of Service (DoS) via Loops
+Problem: Iterating over large arrays (e.g., during closeVoting) can cause DoS due to gas limits.
+
+Solution: We implemented the "favor pull over push" pattern:
+
+Participants reclaim their own tokens via withdrawFromProposal.
+
+Signaling proposals are executed individually via executeSignaling.
+
+Benefit: No unbounded loops remain in the contract; gas usage is predictable and user-driven.
+
 ---
 
-## 🛠️ Compilation & Deployment
+## Usage Example
 
-### Requirements
-
-- Node.js with Hardhat
-- Solidity ^0.8.0
-- OpenZeppelin contracts
-
-### Install dependencies
-
-```bash
-npm install --save-dev hardhat @openzeppelin/contracts
-Compile
-bash
-Copiar
-Editar
-npx hardhat compile
-Deploy Example
-js
-Copiar
-Editar
-const QuadraticVoting = await ethers.getContractFactory("QuadraticVoting");
-const contract = await QuadraticVoting.deploy(tokenPrice, maxTokens);
-🧪 Usage Example
 Open voting (only owner):
-
-solidity
-Copiar
-Editar
+```
 contract.openVoting({ value: 8000 });
+```
+
 Add participant and buy tokens:
-
-solidity
-Copiar
-Editar
+```
 contract.addParticipant({ value: 500 });
+```
+
 Create proposals:
-
-solidity
-Copiar
-Editar
+```
 contract.addProposal("Title", "Description", 2000, addressOfProposalContract);
+```
+
 Vote (stake):
-
-solidity
-Copiar
-Editar
+```
 contract.stake(2, proposalId); // Uses 4 tokens
+```
+
 Withdraw votes:
-
-solidity
-Copiar
-Editar
+```
 contract.withdrawFromProposal(1, proposalId); // Gets 1 token back
+```
+
 Execute signaling:
-
-solidity
-Copiar
-Editar
+```
 contract.executeSignaling(proposalId);
-📄 Documentation
-QuadraticVoting.sol: Main smart contract handling proposals, voting, staking, etc.
+```
+## Disclaimer
+The original assignment statement is not included in this repository. However, this contract and its documentation are based on a real academic project focused on DAO governance and secure voting systems. The code is original, reviewed and tested.
+---
 
-ERC20Token.sol: Custom token implementation extending OpenZeppelin’s ERC20.
+## Authors
+**Javier Jerez Reinoso**
+**Pablo Chicharro Gómez**
+Computer Science engineers
 
-IExecutableProposal.sol: Interface for external proposal contracts.
-
-📘 Project Report
-The full technical documentation, including motivation, system design, security analysis, optional improvements, and implementation details, is available in the report:
-
-📄 Memoria Proyecto.pdf (📌 in Spanish)
-
-❗ Disclaimer
-The original assignment statement is not included in this repository. However, this contract and its documentation are based on a real academic project focused on DAO governance and secure voting systems. The code is original, reviewed, and tested.
-
-👨‍🎓 Authors
-Pablo Javier
-
-Graduated in Computer Engineering (English track)
-
-Final year project on secure and scalable DAO voting mechanisms using Solidity and ERC20.
-
-
-
+---
