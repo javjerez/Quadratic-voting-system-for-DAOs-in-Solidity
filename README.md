@@ -2,7 +2,7 @@
 
 This repository contains a secure and gas-efficient `Solidity` smart contract that implements a **quadratic voting system for DAOs `(Decentralized Autonomous Organizations)`** using ERC20 tokens. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals, everything **on-chain**.
 
-> The complete design rationale and analysis are detailed in the project's technical report (Spanish only): `Rummikub-Technical-Report.pdf`.
+> The complete design rationale and analysis are detailed in the project's technical report (Spanish only): `Technical-Report.pdf`.
 
 ## Structure
 - **QuadraticVoting.sol:** Main smart contract handling proposals, voting, staking, etc.
