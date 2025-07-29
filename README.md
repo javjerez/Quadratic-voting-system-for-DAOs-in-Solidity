@@ -33,49 +33,6 @@ This repository contains a secure and gas-efficient `Solidity` smart contract th
 | **Block Timestamp Abuse**   | Contract logic does not rely on block timestamps                           | —                                                    |
 | **Denial of Service (DoS)** | Avoided using "pull over push" design in `closeVoting()`                   | `executeSignaling()`, memory design                  |
 
-### Reentrancy Attacks
-Protection: The contract uses a lock variable (a classic mutex pattern) to prevent reentrancy on sensitive functions.
-
-Applied in:
-
-stake()
-
-withdrawFromProposal()
-
-checkAndExecuteProposal()
-
-executeSignaling()
-
-Why it's important: Prevents a malicious contract from recursively calling vulnerable functions before the state is updated.
-
-### DelegateCall / Parity Wallet Attack
-Protection: The contract does not use delegatecall.
-
-Ownership is set directly via the constructor and is never altered externally.
-
-Why it matters: Prevents unintentional code execution in the context of your contract — the flaw behind the infamous Parity Wallet hack.
-
-### tx.origin Exploits
-Protection: All access control is enforced using msg.sender, never tx.origin.
-
-Why it matters: Using tx.origin can allow phishing-style attacks where users unknowingly trigger functions from a malicious contract.
-
-### Timestamp Manipulation
-Protection: The contract does not use block.timestamp for logic, so it’s immune to miners influencing voting timing.
-
-### Denial of Service (DoS) via Loops
-Problem: Iterating over large arrays (e.g., during closeVoting) can cause DoS due to gas limits.
-
-Solution: We implemented the "favor pull over push" pattern:
-
-Participants reclaim their own tokens via withdrawFromProposal.
-
-Signaling proposals are executed individually via executeSignaling.
-
-Benefit: No unbounded loops remain in the contract; gas usage is predictable and user-driven.
-
----
-
 ## Usage Example
 
 Open voting (only owner):
