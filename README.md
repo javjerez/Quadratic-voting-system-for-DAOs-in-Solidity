@@ -21,7 +21,7 @@ This repository contains a secure and gas-efficient `Solidity` smart contract th
   - Proposal execution through interfaces.
   - Protection against common vulnerabilities.
 
-## 🔐 Security Measures
+## Security Measures
 
 | Vulnerability                | Mitigation                                                                 | Code Reference                                       |
 |-----------------------------|----------------------------------------------------------------------------|------------------------------------------------------|
