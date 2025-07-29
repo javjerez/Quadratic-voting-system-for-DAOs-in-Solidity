@@ -30,7 +30,7 @@ This repository contains a secure and gas-efficient `Solidity` smart contract th
 | **Reentrancy**              | Guarded using `lock` modifier                                              | `stake()`, `withdrawFromProposal()`, `executeSignaling()` |
 | **DelegateCall Attack**     | No delegateCall used. Owner is set via constructor                         | Constructor                                          |
 | **tx.origin misuse**        | Only uses `msg.sender` for access control                                  | All modifiers                                        |
-| **Block Timestamp Abuse**   | Contract logic does not rely on block timestamps                           | —                                                    |
+| **Block Timestamp Abuse**   | Contract logic does not rely on block timestamps                           | -                                                    |
 | **Denial of Service (DoS)** | Avoided using "pull over push" design in `closeVoting()`                   | `executeSignaling()`, memory design                  |
 
 ## Usage Example
