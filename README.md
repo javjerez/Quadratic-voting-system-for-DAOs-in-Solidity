@@ -1,23 +1,15 @@
-# Quadratic-voting-system-for-DAOs-in-Solidity
-A secure, gas-efficient smart contract implementing a quadratic voting system for DAO governance using ERC20 tokens.
-
-Final year project on secure and scalable DAO voting mechanisms using Solidity and ERC20.
-
----
-
 # 🪙 Quadratic Voting Smart Contract for DAOs
 
-This repository contains a `Solidity` smart contract that implements a **quadratic voting system for DAOs `(Decentralized Autonomous Organizations)`**. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals, everything **on-chain**.
+This repository contains a secure and gas-efficient `Solidity` smart contract that implements a **quadratic voting system for DAOs `(Decentralized Autonomous Organizations)`** using ERC20 tokens. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals, everything **on-chain**.
 
 > The complete design rationale and analysis are detailed in the project's technical report (Spanish only): `Rummikub-Technical-Report.pdf`.
 
-## Documentation
+## Structure
 - **QuadraticVoting.sol:** Main smart contract handling proposals, voting, staking, etc.
 - **ERC20Token.sol:** Custom token implementation extending OpenZeppelin’s ERC20.
 - **IExecutableProposal.sol:** Interface for external proposal contracts.
 
 ## Features
-
 - **Quadratic Voting**: Vote costs grow quadratically (1, 4, 9, ...).
 - **Two Proposal Types**:
   - Funding proposals with a budget.
