@@ -1,4 +1,4 @@
-# 🪙 Quadratic Voting Smart Contract for DAOs
+# 🪙 Quadratic Voting Smart Contract for DAOs (Solidity)
 
 This repository contains a secure and gas-efficient `Solidity` smart contract that implements a **quadratic voting system for DAOs `(Decentralized Autonomous Organizations)`** using ERC20 tokens. The contract allows participants to register, propose initiatives, vote using quadratic weighting and execute approved proposals, everything **on-chain**.
 
